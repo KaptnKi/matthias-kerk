@@ -397,6 +397,28 @@ body{font-family:var(--display);font-weight:350;font-size:16px;line-height:1.65}
 @media (max-width:900px){.stat{border-bottom:0}}
 
 .q-outro + .q-outro{margin-top:16px}
+/* ---------- v69: klickbare Themen bei den Fragen ---------- */
+.topics{margin-top:56px}
+.topics-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:16px}
+.topic-btns{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.topic{font:inherit;font-size:clamp(14px,1.15vw,17px);font-weight:400;line-height:1.2;text-align:center;color:var(--ink);background:rgba(255,255,255,.04);border:1px solid rgba(238,241,236,.28);border-radius:16px;padding:22px 10px;min-height:76px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s,color .3s,background .3s,transform .3s}
+.topic:hover{border-color:var(--glow);transform:translateY(-2px)}
+.topic[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.topic:focus-visible{outline-offset:3px;border-radius:16px}
+@media (max-width:1100px){.topic-btns{grid-template-columns:repeat(4,minmax(0,1fr))}.topic{font-size:15px}}
+@media (max-width:640px){#fragen h2{font-size:36px}}
+@media (max-width:640px){.topic-btns{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.topic{font-size:16px;min-height:64px;padding:16px 8px}.topic:last-child{grid-column:1 / -1}}
+.questions li .q-ex > span:not(.q-ex-label){font-size:inherit;color:inherit;letter-spacing:normal}
+.questions li .q-ex-label{font-size:11px}
+/* v74: Laufband so groß wie die Überschriften */
+.marquee{padding:30px 0}
+.marquee-track{gap:64px;padding-left:64px;animation-duration:70s}
+.marquee span{font-size:clamp(40px,6.5vw,96px);line-height:1.1}
+@media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+.q-body{transition:opacity .25s ease}
+.q-body.is-swapping{opacity:0}
+@media (prefers-reduced-motion:reduce){.q-body{transition:none}}
+
 </style>
 </head>
 <body>
@@ -517,9 +539,6 @@ body{font-family:var(--display);font-weight:350;font-size:16px;line-height:1.65}
         <p>Heute kann ich genau dort ansetzen. Denn eine unserer Kernkompetenzen bei Von und Zu ist es, die richtigen Fragen zu stellen, Dinge zu hinterfragen und gemeinsam mit Unternehmen herauszuarbeiten, was sie besonders macht und wie sie das überzeugend kommunizieren können.</p>
         <p>Die richtigen Fragen führen zu den richtigen Aussagen. Und die richtigen Aussagen schaffen Aufmerksamkeit.</p>
         <p>Genau darüber schreibe ich hier auf LinkedIn: über Begegnungen, Kundengespräche, Veranstaltungen, Netzwerke und meine Erfahrungen rund um Marke und Kommunikation.</p>
-        <div class="disciplines">
-          <span>Unternehmensmarke</span><span>Arbeitgebermarke</span><span>Produktmarke</span><span>Positionierung</span><span>Differenzierung</span><span>Sichtbarkeit</span><span>Aufmerksamkeit</span><span>Kampagnen</span><span>Marke</span><span>Design</span>
-        </div>
       </div>
     </div>
   </section>
@@ -534,26 +553,42 @@ body{font-family:var(--display);font-weight:350;font-size:16px;line-height:1.65}
   <!-- 05 FRAGEN -->
   <section id="fragen">
     <div class="sec-label">05 — Fragen</div>
-    <h2 class="reveal">Gute Aussagen<br>beginnen mit <span class="glow-text">Fragen</span>.</h2>
+    <h2 class="reveal">Gute Aussagen<br>beginnen mit den<br><span class="glow-text">richtigen Fragen</span>.</h2>
 
-    <div class="q-intro reveal">
-      <p class="lead">Ein Beispiel aus der Praxis: <em>die Arbeitgebermarke.</em></p>
-      <p>Viele Unternehmen suchen Fachkräfte – und sagen dabei oft dasselbe wie alle anderen: gutes Betriebsklima, flache Hierarchien, moderner Arbeitsplatz. Bevor eine Stellenanzeige oder Kampagne entsteht, lohnt sich deshalb ein ehrlicher Blick nach innen. Diese Fragen sollte man sich stellen:</p>
+    <div class="topics reveal" role="group" aria-labelledby="topics-label">
+      <p class="topics-label" id="topics-label">Wähle ein Thema</p>
+      <div class="topic-btns">
+        <button type="button" class="topic" data-topic="unternehmensmarke" aria-pressed="false">Unternehmensmarke</button>
+        <button type="button" class="topic" data-topic="arbeitgebermarke" aria-pressed="true">Arbeitgebermarke</button>
+        <button type="button" class="topic" data-topic="produktmarke" aria-pressed="false">Produktmarke</button>
+        <button type="button" class="topic" data-topic="positionierung" aria-pressed="false">Positionierung</button>
+        <button type="button" class="topic" data-topic="differenzierung" aria-pressed="false">Differenzierung</button>
+        <button type="button" class="topic" data-topic="kampagnen" aria-pressed="false">Kampagnen</button>
+        <button type="button" class="topic" data-topic="design" aria-pressed="false">Design</button>
+      </div>
     </div>
 
-    <div class="q-head reveal"><span>Die Fragen</span><span class="q-tag">Beispiel: Arbeitgebermarke</span></div>
+    <div class="q-body" aria-live="polite">
+    <div class="q-intro reveal">
+      <p class="lead">Ein Beispiel aus der Praxis: <em data-t="lead">die Arbeitgebermarke.</em></p>
+      <p data-t="intro">Viele Unternehmen suchen Fachkräfte – und sagen dabei oft dasselbe wie alle anderen: gutes Betriebsklima, flache Hierarchien, moderner Arbeitsplatz. Bevor eine Stellenanzeige oder Kampagne entsteht, lohnt sich deshalb ein ehrlicher Blick nach innen. Diese Fragen sollte man sich stellen:</p>
+    </div>
+
+    <div class="q-head reveal"><span>Die Fragen</span><span class="q-tag" data-t="tag">Beispiel: Arbeitgebermarke</span></div>
 
     <ul class="questions">
-      <li class="reveal"><span>Q.01</span><h3>Warum sollte sich jemand für euch entscheiden?</h3><p class="q-ex"><span class="q-ex-label">Arbeitgebermarke</span>Warum sollte eine Fachkraft ausgerechnet bei euch anfangen – und nicht beim Arbeitgeber nebenan?</p></li>
-      <li class="reveal"><span>Q.02</span><h3>Was unterscheidet euch wirklich von anderen Arbeitgebern?</h3><p class="q-ex"><span class="q-ex-label">Arbeitgebermarke</span>Wenn alle mit gutem Team, sicherem Arbeitsplatz und tollen Benefits werben: Was macht euch dann tatsächlich besonders?</p></li>
-      <li class="reveal"><span>Q.03</span><h3>Wisst ihr eigentlich, wie ihr von außen wahrgenommen werdet?</h3><p class="q-ex"><span class="q-ex-label">Arbeitgebermarke</span>Welches Bild haben potenzielle Mitarbeitende von euch – und stimmt das mit eurem eigenen Selbstbild überein?</p></li>
-      <li class="reveal"><span>Q.04</span><h3>Sprecht ihr über euch – oder zu den Menschen, die ihr erreichen wollt?</h3><p class="q-ex"><span class="q-ex-label">Arbeitgebermarke</span>Erzählt ihr vor allem, wie toll ihr seid? Oder zeigt ihr, was zukünftige Mitarbeitende bei euch wirklich erwartet: echte Einblicke in Berufe, das Team und persönliche Entwicklungsmöglichkeiten?</p></li>
-      <li class="reveal"><span>Q.05</span><h3>Kommt eure Botschaft auch bei den Richtigen an?</h3><p class="q-ex"><span class="q-ex-label">Arbeitgebermarke</span>Erreicht ihr mit eurer Kommunikation die Menschen, die zu euch passen – und macht ihr ihnen Lust, Teil eures Teams zu werden?</p></li>
+      <li class="reveal"><span>Q.01</span><h3 data-t="q1">Warum sollte sich jemand für euch entscheiden?</h3><p class="q-ex"><span class="q-ex-label" data-t="label">Arbeitgebermarke</span><span data-t="e1">Warum sollte eine Fachkraft ausgerechnet bei euch anfangen – und nicht beim Arbeitgeber nebenan?</span></p></li>
+      <li class="reveal"><span>Q.02</span><h3 data-t="q2">Was macht euch als Arbeitgeber besonders – und was haben eure Mitarbeitenden davon?</h3><p class="q-ex"><span class="q-ex-label" data-t="label">Arbeitgebermarke</span><span data-t="e2">Flexible Arbeitszeiten können zum Beispiel helfen, Beruf und Privatleben besser zu vereinbaren. Welcher Vorteil zählt, hängt von der Lebenssituation ab – für Berufseinsteiger ist es oft ein anderer als für erfahrene Fachkräfte oder Eltern.</span></p></li>
+      <li class="reveal"><span>Q.03</span><h3 data-t="q3">Passt das Bild von euch als Arbeitgeber zu dem, was Mitarbeitende tatsächlich erleben?</h3><p class="q-ex"><span class="q-ex-label" data-t="label">Arbeitgebermarke</span><span data-t="e3">Welches Bild haben potenzielle Mitarbeitende von euch – und erleben eure heutigen Mitarbeitenden es genauso?</span></p></li>
+      <li class="reveal"><span>Q.04</span><h3 data-t="q4">Sprecht ihr über euch – oder zu den Menschen, die ihr erreichen wollt?</h3><p class="q-ex"><span class="q-ex-label" data-t="label">Arbeitgebermarke</span><span data-t="e4">Erzählt ihr vor allem, wie toll ihr seid? Oder zeigt ihr, was zukünftige Mitarbeitende bei euch wirklich erwartet: echte Einblicke in Berufe, das Team und persönliche Entwicklungsmöglichkeiten?</span></p></li>
+      <li class="reveal"><span>Q.05</span><h3 data-t="q5">Kommt eure Botschaft auch bei den Richtigen an?</h3><p class="q-ex"><span class="q-ex-label" data-t="label">Arbeitgebermarke</span><span data-t="e5">Erreicht ihr mit eurer Kommunikation die Menschen, die zu euch passen – und macht ihr ihnen Lust, Teil eures Teams zu werden?</span></p></li>
     </ul>
 
-    <p class="q-outro reveal">Wer seine Arbeitgebermarke stärken will, muss zuerst die eigene Perspektive hinterfragen und die Sicht potenzieller Mitarbeitender verstehen.</p>
-    <p class="q-outro reveal">Denn aus den richtigen Fragen entstehen relevante und authentische Botschaften. Und aus diesen Botschaften eine Arbeitgebermarke, die nicht nur Aufmerksamkeit schafft, sondern die richtigen Menschen anspricht.</p>
+    <p class="q-outro reveal" data-t="o1">Wer seine Arbeitgebermarke stärken will, muss zuerst die eigene Perspektive hinterfragen – und verstehen, was neue und bestehende Mitarbeitende von einem Arbeitgeber erwarten.</p>
+    <p class="q-outro reveal" data-t="o2">Eine Arbeitgebermarke überzeugt, wenn ihr Versprechen im Arbeitsalltag eingelöst wird – nicht nur in der Stellenanzeige. Dann gewinnt sie nicht nur Aufmerksamkeit, sondern die richtigen Menschen, und sie bleiben.</p>
+    </div>
   </section>
+
 
 
   <!-- VON UND ZU -->
@@ -685,5 +720,48 @@ body{font-family:var(--display);font-weight:350;font-size:16px;line-height:1.65}
   }, { passive: true });
 })();
 </script>
+<script>
+// Themen bei den Fragen: Klick tauscht Einleitung, Fragen, Beispiele und Schluss aus. Adresse #fragen-<thema> öffnet direkt ein Thema.
+(() => {
+  const T = {
+  unternehmensmarke: {name:"Unternehmensmarke", lead:"die Unternehmensmarke.", intro:"Viele Unternehmen beschreiben sich mit denselben Worten: Qualität, Kompetenz, Zuverlässigkeit. Das stimmt meistens – sagt aber wenig darüber, was Kunden, Mitarbeitende und Partner davon haben. Bevor Website, Imagefilm oder Broschüre entstehen, lohnt sich deshalb ein Blick auf Identität, Versprechen und tatsächliche Erfahrung:", q:["Wofür steht ihr – und was bedeutet das konkret für eure Zielgruppen?","Was versprecht ihr – und woran erleben das eure Kunden, Mitarbeitenden und Partner?","Wie sehen euch die anderen wirklich?","Verstehen die Menschen schon beim ersten Kontakt, was sie von euch haben?","Erkennen alle dasselbe Unternehmen?"], e:["Eine Haltung wird erst spürbar, wenn Kunden, Mitarbeitende und Partner wissen, was sie im Alltag davon haben: etwa Verlässlichkeit, Orientierung oder ein gutes Gefühl in der Zusammenarbeit.","Wo hält das Versprechen im Alltag – und wo erleben Menschen etwas anderes, als ihr erzählt?","Wie sprechen Kunden, Mitarbeitende und Partner über euch, wenn ihr nicht dabei seid – und wo gehen die Bilder auseinander?","„Wir liefern schnell“ ist eine Leistung. „Ihr könnt planen, ohne zu warten“ ist der Vorteil. Welcher von beiden kommt bei euch an?","Sind Website, Vertrieb, Stellenanzeige und Auftreten vor Ort aus einem Guss – oder erzählen sie unterschiedliche Geschichten?"], o1:"Eine Unternehmensmarke wird glaubwürdig, wenn ihr Versprechen im Alltag der Menschen eingelöst wird.", o2:"Dann wird aus einer Haltung eine Marke, der Kunden, Mitarbeitende und Partner vertrauen."},
+  arbeitgebermarke: {name:"Arbeitgebermarke", lead:"die Arbeitgebermarke.", intro:"Viele Unternehmen suchen Fachkräfte – und sagen dabei oft dasselbe wie alle anderen: gutes Betriebsklima, flache Hierarchien, moderner Arbeitsplatz. Bevor eine Stellenanzeige oder Kampagne entsteht, lohnt sich deshalb ein ehrlicher Blick nach innen. Diese Fragen sollte man sich stellen:", q:["Warum sollte sich jemand für euch entscheiden?","Was macht euch als Arbeitgeber besonders – und was haben eure Mitarbeitenden davon?","Passt das Bild von euch als Arbeitgeber zu dem, was Mitarbeitende tatsächlich erleben?","Sprecht ihr über euch – oder zu den Menschen, die ihr erreichen wollt?","Kommt eure Botschaft auch bei den Richtigen an?"], e:["Warum sollte eine Fachkraft ausgerechnet bei euch anfangen – und nicht beim Arbeitgeber nebenan?","Flexible Arbeitszeiten können zum Beispiel helfen, Beruf und Privatleben besser zu vereinbaren. Welcher Vorteil zählt, hängt von der Lebenssituation ab – für Berufseinsteiger ist es oft ein anderer als für erfahrene Fachkräfte oder Eltern.","Welches Bild haben potenzielle Mitarbeitende von euch – und erleben eure heutigen Mitarbeitenden es genauso?","Erzählt ihr vor allem, wie toll ihr seid? Oder zeigt ihr, was zukünftige Mitarbeitende bei euch wirklich erwartet: echte Einblicke in Berufe, das Team und persönliche Entwicklungsmöglichkeiten?","Erreicht ihr mit eurer Kommunikation die Menschen, die zu euch passen – und macht ihr ihnen Lust, Teil eures Teams zu werden?"], o1:"Wer seine Arbeitgebermarke stärken will, muss zuerst die eigene Perspektive hinterfragen – und verstehen, was neue und bestehende Mitarbeitende von einem Arbeitgeber erwarten.", o2:"Eine Arbeitgebermarke überzeugt, wenn ihr Versprechen im Arbeitsalltag eingelöst wird – nicht nur in der Stellenanzeige. Dann gewinnt sie nicht nur Aufmerksamkeit, sondern die richtigen Menschen, und sie bleiben."},
+  produktmarke: {name:"Produktmarke", lead:"die Produktmarke.", intro:"Produkte werden oft über Merkmale erklärt – Leistung, Material, Preis, Rezeptur. Doch Menschen wählen sie nicht nur wegen der Eigenschaften, sondern wegen dem, was sie davon haben: eine Lösung, Wirtschaftlichkeit, Genuss, eine Entdeckung oder ein gutes Gefühl in einer bestimmten Situation. Und am Kauf sind oft mehrere beteiligt: wer es nutzt, wer es empfiehlt und wer entscheidet. Bevor ein Produkt beworben wird, lohnt sich deshalb der Blick durch deren Augen:", q:["Was macht euer Produkt für Menschen wertvoll – und für welche?","Was zählt für Nutzer, Empfehler und Entscheider?","Machen Gestaltung und Kommunikation den besonderen Reiz eures Produkts verständlich und spürbar?","Was bedeuten Geschmack, Material oder Funktion konkret für die Menschen, die euer Produkt wählen?","Welches Gefühl verspricht eure Marke – und hält das Produkterlebnis dieses Versprechen?"], e:["Ein Produkt kann ein Problem lösen oder einen Wunsch erfüllen: sich etwas Besonderes gönnen, Gästen etwas Interessantes anbieten, etwas Neues entdecken. Welchen Wunsch erfüllt euer Produkt – und in welcher Situation?","Im Betrieb achten Anwender, Einkauf und Geschäftsführung auf Unterschiedliches, im Alltag ebenso. Wird euer Produkt für den eigenen Gebrauch, zum Teilen oder als Geschenk gewählt – und was zählt dabei jeweils?","Bei Hell Yeah trifft ein beschriebenes Geschmacksprofil auf eine freche Markenpersönlichkeit und die Geschichte um Grandma Sally. Bei ABEL verbinden sich Apfel und Blaubeere mit einer Markenwelt rund um Versuchung, Name und Schlangenmotiv. Bei einem Industrieprodukt zeigt sich der Nutzen oft im Datenblatt und im Gespräch. Wo versteht man bei euch, was das Produkt besonders macht – und wo erst nach einem langen Gespräch?","Eine Eigenschaft ist, was das Produkt hat: ein Rezept, ein Werkstoff, eine Funktion. Ein Vorteil ist, was Menschen davon erleben – Genuss, Sicherheit, Zeitersparnis oder ein gutes Gefühl in ihrer Situation.","Die entscheidende Frage ist immer dieselbe: Was haben die Menschen von der Verbindung aus Produkt und Marke? Wer das Versprechen erlebt, erzählt davon weiter. Was sagen Menschen anderen über euer Produkt – und welche Vorteile heben sie selbst hervor?"], o1:"Eine Produktmarke entsteht dort, wo Menschen verstehen, was ihnen das Produkt bringt – und wem sie davon erzählen wollen.", o2:"Eine auffällige Geschichte allein ist noch kein Vorteil. Erst wenn das Produkterlebnis hält, was Name, Gestaltung und Kommunikation versprechen, wird aus einer Marke etwas, das Menschen weiterempfehlen. Beispiele aus unserer Arbeit bei Von und Zu: Hell Yeah, ABEL und Emsbrause."},
+  positionierung: {name:"Positionierung", lead:"die Positionierung.", intro:"Viele Unternehmen wollen möglichst alle ansprechen – aus Sorge, sonst Aufträge zu verlieren. Das Ergebnis ist oft ein Auftritt, der niemanden wirklich erreicht. Bevor Kommunikation entsteht, lohnt sich deshalb die Frage, wo man eigentlich stehen will:", q:["Für wen seid ihr die beste Wahl?","Bei welchem Thema sollen Kunden zuerst an euch denken?","Wo werdet ihr heute im Markt gesehen?","Versteht man euer Angebot schon, bevor man mit euch gesprochen hat?","Traut ihr euch, auf etwas zu verzichten?"], e:["Nicht nur: für welche Branche oder welchen Kundentyp? Sondern: in welcher Situation und bei welchem Bedürfnis seid ihr die beste Wahl – und wann bewusst nicht?","Wenn jemand euren Namen hört: Welches Thema, welche Kompetenz, welches Gefühl soll er damit verbinden?","Als Spezialist, Allrounder oder günstige Alternative – und ist das der Platz, den ihr wollt?","Wird auf der Website und im ersten Kontakt klar, wofür ihr steht – auch ohne dass jemand ein Angebot einholen muss?","Welche Leistungen, Branchen oder Kunden würdet ihr weniger in den Vordergrund stellen, um für die Bedürfnisse, die ihr am besten erfüllt, klarer erkennbar zu werden?"], o1:"Wer sich klar positionieren will, muss zuerst entscheiden, für wen er da ist – und für wen nicht.", o2:"Eine Position wird nicht behauptet, sondern gelebt: im Angebot, im Vertrieb und im Auftritt."},
+  differenzierung: {name:"Differenzierung", lead:"die Differenzierung.", intro:"In vielen Branchen sind Produkte und Leistungen kaum noch zu unterscheiden. Dann entscheidet am Ende oft nur noch der Preis. Wichtig ist deshalb nicht, ob ihr in allem einzigartig seid, sondern ob es einen Unterschied gibt, der Kunden wichtig ist und den sie euch glauben:", q:["Was unterscheidet euch – und welchen Vorteil haben eure Kunden davon?","Was würde euren Kunden fehlen, wenn es euch morgen nicht mehr gäbe?","Warum ist dieser Vorteil für eure Kunden wichtig?","Ist er glaubwürdig?","Wann entscheiden Kunden nur nach dem Preis – und was würde sie anders entscheiden lassen?"], e:["Eine Besonderheit überzeugt erst, wenn Kunden erkennen, was sie davon haben. Dieselbe Besonderheit kann dem einen Zeit sparen, dem anderen Sicherheit geben und dem dritten ein gutes Gefühl.","Wen würden sie als Ersatz nehmen – und was würde sich für sie dadurch verschlechtern?","Wofür brauchen sie ihn in ihrem Alltag oder bei ihrer Entscheidung – und ist er ihnen wichtiger als das, was andere bieten?","Woran können Kunden erkennen, dass er stimmt – an konkreten Erfahrungen, Beispielen oder Ergebnissen?","Der Preis ist eine mögliche Entscheidungssituation. Auch Vertrauen, Sicherheit oder ein gutes Gefühl können den Ausschlag geben: Wo wird das bei euch noch zu wenig sichtbar?"], o1:"Wer sich abheben will, braucht keinen perfekten Alleinstellungssatz, sondern einen Unterschied, den Kunden spüren, verstehen und der ihnen etwas wert ist.", o2:"Wenn Menschen verstehen, was sie davon haben und warum es für sie zählt, wird aus einem Unterschied ein Grund, euch zu wählen."},
+  kampagnen: {name:"Kampagnen", lead:"Kampagnen.", intro:"Viele Kampagnen starten mit der Frage nach dem Kanal: Social Media, Plakat, Anzeige? Dabei steht die wichtigste Frage davor – was soll sich nach der Kampagne verändert haben? Bevor kreative Ideen entstehen, lohnt sich deshalb ein klarer Blick auf Ziel und Zielgruppe:", q:["Was sollen Menschen nach der Kampagne anders verstehen, fühlen oder tun?","Wen wollt ihr erreichen – und was bewegt diese Menschen?","Was ist die Leitidee der Kampagne?","Welche Rolle spielt welcher Kanal?","Was ist der nächste Schritt für die Menschen, die ihr erreicht?"], e:["Aufmerksamkeit ist nur der Anfang. Woran würdet ihr später erkennen, dass die Kampagne ihr eigentliches Ziel erreicht hat?","Welche Bedürfnisse, Wünsche und Hürden haben sie – und setzt die Kampagne dort an oder bei dem, was ihr gern erzählen möchtet?","Verbindet die Idee das, was eure Zielgruppe bewegt, mit dem, wofür eure Marke steht?","Wo wird Aufmerksamkeit geweckt, wo überzeugt, wo zum Handeln eingeladen – oder soll jeder Kanal alles gleichzeitig leisten?","Das kann ein Gespräch sein, eine Bewerbung, ein Kauf, eine Empfehlung oder eine Teilnahme. Ist er klar – und seid ihr darauf vorbereitet?"], o1:"Eine wirksame Kampagne beginnt nicht mit dem Kanal, sondern mit der Frage, was sich verändern soll.", o2:"Kreativität übersetzt, was eure Zielgruppe bewegt und wofür eure Marke steht, in eine Idee, die Menschen zum nächsten Schritt einlädt."},
+  design: {name:"Design", lead:"das Design.", intro:"Design wird oft auf Geschmack reduziert: Gefällt uns das Logo, mögen wir die Farbe? Doch gutes Design ist keine Dekoration, sondern macht sichtbar, wofür ein Unternehmen steht. Bevor gestaltet wird, lohnt sich deshalb die Frage, was das Design leisten soll:", q:["Was soll euer Design verständlich machen – und welches Gefühl soll es auslösen?","Was soll euer Design über euch erzählen – und warum ist das für eure Zielgruppe relevant?","Welchen Eindruck hinterlässt es heute?","Entscheidet ihr nach Geschmack – oder nach Funktion und Haltung?","Funktioniert es überall?"], e:["Gutes Design schafft Orientierung: Man versteht schnell, worum es geht. Und es vermittelt Persönlichkeit: Man erkennt euch wieder und fühlt sich angesprochen.","Welchen Eindruck sollen Menschen in den ersten Sekunden gewinnen – und passt er zu dem, was ihnen wichtig ist?","Wirkt euer Auftritt modern, bodenständig, hochwertig oder beliebig – und passt das zu eurer Leistung?","Wurde euer Erscheinungsbild aus einer Idee entwickelt – oder sind einzelne Entscheidungen im Laufe der Zeit zusammengewachsen?","Auf dem Smartphone, im Druck, auf Fahrzeug und Messestand: Ist die Gestaltung in jeder Situation verständlich, erkennbar und passend?"], o1:"Gutes Design beginnt damit, was es ausdrücken und bei Menschen bewirken soll.", o2:"Es übersetzt Zielgruppenverständnis und Markenidentität in etwas, das man versteht, wiedererkennt und gern wieder sieht."}
+  };
+  const sec = document.getElementById('fragen');
+  if (!sec) return;
+  const body = sec.querySelector('.q-body');
+  const btns = [...sec.querySelectorAll('.topic')];
+  const set = (k, v) => sec.querySelectorAll('[data-t="' + k + '"]').forEach(el => { el.textContent = v; });
+  const fill = t => {
+    set('lead', t.lead); set('intro', t.intro); set('tag', 'Beispiel: ' + t.name); set('label', t.name);
+    t.q.forEach((q, i) => set('q' + (i + 1), q)); t.e.forEach((e, i) => set('e' + (i + 1), e));
+    set('o1', t.o1); set('o2', t.o2);
+  };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const show = (key, updateHash) => {
+    const t = T[key]; if (!t) return;
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.topic === key)));
+    if (reduce) fill(t);
+    else { body.classList.add('is-swapping'); setTimeout(() => { fill(t); body.classList.remove('is-swapping'); }, 250); }
+    if (updateHash) history.replaceState(null, '', '#fragen-' + key);
+  };
+  btns.forEach(b => b.addEventListener('click', () => show(b.dataset.topic, true)));
+  const fromHash = first => {
+    const m = location.hash.match(/^#fragen-([a-z]+)$/);
+    if (!m || !T[m[1]]) return;
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.topic === m[1])));
+    fill(T[m[1]]);
+    if (first) sec.scrollIntoView();
+  };
+  fromHash(true);
+  addEventListener('hashchange', () => fromHash(false));
+})();
+</script>
+
 </body>
 </html>
